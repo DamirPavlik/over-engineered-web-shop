@@ -1,1 +1,3 @@
-console.log('test123');
+import "../css/app.scss"
+
+require('bootstrap')
