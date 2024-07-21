@@ -40,8 +40,9 @@ class Admin implements AdminInterface
         return password_verify($credentials['password'], $admin->getPassword());
     }
 
-    public function register(object|array|null $getParsedBody)
+    public function logout(): void
     {
-        $this->adminService->reg($getParsedBody);
+        $this->session->forget('admin_user');
+        $this->session->regenerate();
     }
 }
