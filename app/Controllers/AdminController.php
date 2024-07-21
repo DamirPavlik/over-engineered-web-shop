@@ -22,7 +22,7 @@ class AdminController
 
     public function index(Request $request, Response $response): Response
     {
-        return $this->twig->render($response, 'dashboard/index.twig', ['username' => 'admin']);
+        return $this->twig->render($response, 'dashboard/index.twig');
     }
 
     public function renderLogin(Request $request, Response $response): Response
@@ -30,15 +30,6 @@ class AdminController
         return $this->twig->render($response, 'dashboard/login.twig');
     }
 
-    public function renderUsers(Request $request, Response $response): Response
-    {
-        return $this->twig->render($response, 'dashboard/users.twig');
-    }
-
-    public function renderProducts(Request $request, Response $response): Response
-    {
-        return $this->twig->render($response, 'dashboard/products.twig');
-    }
     public function login(Request $request, Response $response): Response
     {
         $data = $this->validatorFactory->make(LoginValidator::class)->validate(
@@ -52,5 +43,11 @@ class AdminController
         }
 
         return $response->withHeader('Location', '/admin-dashboard')->withStatus(302);
+    }
+
+    public function logout(Request $request, Response $response): Response
+    {
+        $this->admin->logout();
+        return $response->withHeader("Location", "/")->withStatus(302);
     }
 }
