@@ -30,4 +30,21 @@ class ProductService
 
         return $product;
     }
+
+    public function getAll(): array
+    {
+        try {
+            $queryBuilder = $this->entityManager->getRepository(Product::class)
+                ->createQueryBuilder('p')
+                ->select('p')
+                ->getQuery();
+
+            return $queryBuilder->getArrayResult();
+        } catch (\Exception $e) {
+            return ["error" => $e];
+        }
+    }
+
+
+
 }
