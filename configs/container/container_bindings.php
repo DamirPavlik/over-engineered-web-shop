@@ -4,15 +4,20 @@ use App\Admin;
 use App\Config;
 use App\Contracts\AdminInterface;
 use App\Contracts\AdminServiceInterface;
+use App\Contracts\EntityManagerServiceInterface;
 use App\Contracts\SessionInterface;
 use App\Contracts\ValidatorFactoryInterface;
 use App\DataObjects\SessionConfig;
 use App\Enum\AppEnvironment;
 use App\Enum\SameSite;
+use App\RouteEntityBindingStrategy;
 use App\Services\AdminService;
+use App\Services\EntityManagerService;
 use App\Session;
 use App\Validators\ValidatorFactory;
+use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\ORMSetup;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
@@ -31,7 +36,7 @@ use Twig\Extra\Intl\IntlExtension;
 use function DI\create;
 
 return [
-    App::class                      => function (ContainerInterface $container) {
+    App::class                              => function (ContainerInterface $container) {
         AppFactory::setContainer($container);
 
         $addMiddlewares = require CONFIG_PATH . '/middleware.php';
@@ -39,20 +44,31 @@ return [
 
         $app = AppFactory::create();
 
+        $app->getRouteCollector()->setDefaultInvocationStrategy(new RouteEntityBindingStrategy($container->get(EntityManagerServiceInterface::class), $app->getResponseFactory()));
+
         $router($app);
 
         $addMiddlewares($app);
 
         return $app;
     },
-    Config::class                   => create(Config::class)->constructor(require CONFIG_PATH . '/app.php'),
-    EntityManager::class            => fn(Config $config) => EntityManager::create(
-        $config->get('doctrine.connection'),
-        ORMSetup::createAttributeMetadataConfiguration(
+    Config::class                           => create(Config::class)->constructor(
+        require CONFIG_PATH . '/app.php'
+    ),
+    EntityManagerInterface::class                    => function (Config $config) {
+        $ormConfig = ORMSetup::createAttributeMetadataConfiguration(
             $config->get('doctrine.entity_dir'),
             $config->get('doctrine.dev_mode')
-        )
-    ),
+        );
+
+//        $ormConfig->addFilter('user', UserFilter::class);
+
+        return new EntityManager(
+            DriverManager::getConnection($config->get('doctrine.connection'), $ormConfig),
+            $ormConfig
+        );
+    },
+
     Twig::class                     => function (Config $config, ContainerInterface $container) {
         $twig = Twig::create(VIEW_PATH, [
             'cache'       => STORAGE_PATH . '/cache/templates',
@@ -92,6 +108,7 @@ return [
            SameSite::from($config->get('session.samesite', 'lax'))
         )
     ),
+    EntityManagerServiceInterface::class => fn(EntityManagerInterface $entityManager) => new EntityManagerService($entityManager),
     ValidatorFactoryInterface::class => fn(ContainerInterface $container) => $container->get(
       ValidatorFactory::class
     ),
