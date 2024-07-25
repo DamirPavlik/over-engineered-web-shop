@@ -1,0 +1,24 @@
+{% extends 'dashboard/category/layout.twig' %}
+
+{% block content %}
+<main class="category-wrapper">
+    <h1>Add Category</h1>
+
+    <form action="/admin-dashboard/categories" method="POST">
+        <div>
+            <label for="title">Category</label>
+            <input type="text" id="title" name="title">
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+
+    <h2>All Categories</h2>
+    <table class="all-categories">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+    </table>
+</main>
+{% endblock %}
