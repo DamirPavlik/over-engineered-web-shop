@@ -1,0 +1,79 @@
+{% extends 'dashboard/products/layout.twig' %}
+
+{% block content %}
+<main id="products-wrapper">
+    <h1>Add Products</h1>
+
+    <form action="/admin-dashboard/products" method="POST">
+        <div>
+            <label for="title">Product Title</label>
+            <input type="text" id="title" name="title">
+        </div>
+        <div>
+            <label for="description">Description</label>
+            <input type="text" id="description" name="description">
+        </div>
+        <div>
+            <label for="price">Price</label>
+            <input type="number" id="price" name="price">
+        </div>
+        <div>
+            <label for="stock-quantity">Stock Quantity</label>
+            <input type="number" id="stock-quantity" name="stockQuantity">
+        </div>
+
+        <select name="category" id="category">
+        </select>
+        <button type="submit">Submit</button>
+    </form>
+
+    <table class="all-products">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Stock Quantity</th>
+            <th>Category</th>
+            <th>Created At</th>
+            <th>Updated At</th>
+            <th>Actions</th>
+        </tr>
+    </table>
+
+    <div id="edit-popup" class="edit-popup">
+        <div class="popup-content">
+            <span id="closePopupBtn" class="close">&times;</span>
+            <h3>Edit Product</h3>
+
+            <form method="POST">
+
+                <div>
+                    <label for="name">Name</label>
+                    <input type="text" name="name" id="name">
+                </div>
+                <div>
+                    <label for="description">Description</label>
+                    <input type="text" name="description" id="description">
+                </div>
+                <div>
+                    <label for="category">Category</label>
+                    <select name="category" id="category">
+                    </select>
+                </div>
+                <div>
+                    <label for="price">Price</label>
+                    <input type="number" name="price" id="price">
+                </div>
+                <div>
+                    <label for="stockQuantity">Stock Quantity</label>
+                    <input type="number" name="stockQuantity" id="stockQuantity">
+                </div>
+
+                <button type="submit">Submit</button>
+            </form>
+
+        </div>
+    </div>
+</main>
+{% endblock %}
