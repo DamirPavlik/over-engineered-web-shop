@@ -12,7 +12,7 @@ class ProductValidator implements ValidatorInterface
     {
         $validator = new Validator($data);
 
-        $validator->rule('required', ['title', 'description', 'price', 'stockQuantity']);
+        $validator->rule('required', ['description', 'price', 'stockQuantity']);
         $validator->rule('min', 'price', 0);
         $validator->rule('min', 'stockQuantity', 0);
 
