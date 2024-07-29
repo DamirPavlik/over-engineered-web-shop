@@ -13,20 +13,20 @@ class ProductService
     {
     }
 
-    public function create(array $data): Product
+    public function create(ProductData $productData): Product
     {
         $categoryRepository = $this->entityManager->getRepository(Category::class);
-        $category = $categoryRepository->find($data['category']);
+        $category = $categoryRepository->find($productData->categoryId);
 
         if (!$category) {
             throw new \Exception("Category not found");
         }
 
         $product = new Product();
-        $product->setName($data['title']);
-        $product->setDescription($data['description']);
-        $product->setPrice($data['price']);
-        $product->setStockQuantity($data['stockQuantity']);
+        $product->setName($productData->name);
+        $product->setDescription($productData->description);
+        $product->setPrice($productData->price);
+        $product->setStockQuantity($productData->stockQuantity);
         $product->setCategory($category);
 
         return $product;
