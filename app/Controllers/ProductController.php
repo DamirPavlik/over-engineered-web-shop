@@ -32,7 +32,13 @@ class ProductController
     public function addProduct(Request $request, Response $response): Response
     {
         $data = $this->validatorFactory->make(ProductValidator::class)->validate($request->getParsedBody());
-        $product = $this->productService->create($data);
+        $product = $this->productService->create(new ProductData(
+            name: $data['name'],
+            categoryId: $data['category'],
+            description: $data['description'],
+            price: $data['price'],
+            stockQuantity: $data['stockQuantity']
+        ));
 
         $this->entityManagerService->sync($product);
 
