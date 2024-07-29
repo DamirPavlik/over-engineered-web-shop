@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let categoriesMap = {};
 
     const populateOptions = (element, data, defaultOption, selectedId = null) => {
-        element.innerHTML = `<option disabled>${defaultOption}</option>`;
+        element.innerHTML = `<option disabled selected>${defaultOption}</option>`;
         data.forEach(item => {
             const option = document.createElement('option');
             option.value = item.id;
@@ -49,19 +49,20 @@ document.addEventListener('DOMContentLoaded', () => {
             tr.appendChild(createTableCell(product.description));
             tr.appendChild(createTableCell(product.price));
             tr.appendChild(createTableCell(product.stockQuantity));
-            tr.appendChild(createTableCell(product.category_id));
+            tr.appendChild(createTableCell(categoriesMap[product.category_id]));
             tr.appendChild(createTableCell(formatDateTime(product.createdAt.date)));
             tr.appendChild(createTableCell(formatDateTime(product.updatedAt.date)));
             const actionsTd = document.createElement("td");
-            actionsTd.innerHTML = `<button class="edit-product" data-product='${JSON.stringify(product)}'>Edit</button> <button data-id="${product.id}" data-name="${product.name}" class="delete-product">Delete</button>`;
+            actionsTd.innerHTML = `<button class="edit-product admin-edit-button" data-product='${JSON.stringify(product)}'>Edit <i class="bi bi-pencil"></i></button> <button data-id="${product.id}" data-name="${product.name}" class="delete-product admin-delete-button">Delete <i class="bi bi-trash"></i></button>`;
             tr.appendChild(actionsTd);
-
             productWrapper.appendChild(tr);
         });
     };
 
-    fetchData('/admin-dashboard/categories/load', loadCategories, 'Error fetching categories:');
-    fetchData('/admin-dashboard/products/load', loadProducts, 'Error fetching products:');
+    fetchData('/admin-dashboard/categories/load', (data) => {
+        loadCategories(data);
+        fetchData('/admin-dashboard/products/load', loadProducts, 'Error fetching products:');
+    }, 'Error fetching categories:');
 
     const popup = document.querySelector('#edit-popup');
     const popupForm = document.querySelector('#edit-popup form');
