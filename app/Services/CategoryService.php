@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Contracts\EntityManagerServiceInterface;
+use App\DataObjects\CategoryData;
+use App\DataObjects\ProductData;
 use App\Entity\Category;
 
 class CategoryService
@@ -25,12 +27,18 @@ class CategoryService
         }
     }
 
-    public function create(array $data): Category
+    public function create(CategoryData $categoryData): Category
     {
         $category = new Category();
 
-        $category->setName($data['title']);
+        $category->setName($categoryData->name);
 
+        return $category;
+    }
+
+    public function update(Category $category, CategoryData $categoryData): Category
+    {
+        $category->setName($categoryData->name);
         return $category;
     }
 }
