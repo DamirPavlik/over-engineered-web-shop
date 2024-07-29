@@ -81,9 +81,6 @@ return [
 
         return $twig;
     },
-    /**
-     * The following two bindings are needed for EntryFilesTwigExtension & AssetExtension to work for Twig
-     */
     'webpack_encore.packages'               => fn() => new Packages(
         new Package(new JsonManifestVersionStrategy(BUILD_PATH . '/manifest.json'))
     ),
