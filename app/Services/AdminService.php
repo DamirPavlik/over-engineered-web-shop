@@ -39,4 +39,18 @@ class AdminService implements AdminServiceInterface
     {
         return $this->entityManager->getRepository(Admin::class)->findBy(['email' => $email])[0] ?? null;
     }
+
+    public function getAll(): array
+    {
+        try {
+            $queryBuilder = $this->entityManager->getRepository(Admin::class)
+                ->createQueryBuilder('a')
+                ->select('a.id, a.name, a.email', 'a.createdAt', 'a.updatedAt')
+                ->getQuery();
+
+            return $queryBuilder->getArrayResult();
+        } catch (\Exception $e) {
+            return ["error" => $e->getMessage()];
+        }
+    }
 }
