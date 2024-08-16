@@ -7,6 +7,7 @@ use App\Contracts\AdminInterface;
 use App\Contracts\AdminServiceInterface;
 use App\Contracts\SessionInterface;
 use App\Enum\LoginAttemptStatus;
+use App\Entity\Admin as AdminEntity;
 
 class Admin implements AdminInterface
 {
@@ -44,5 +45,14 @@ class Admin implements AdminInterface
     {
         $this->session->forget('admin_user');
         $this->session->regenerate();
+    }
+
+    public function getAdmin(AdminEntity $admin): array
+    {
+        return [
+            'id' => $admin->getId(),
+            'name' => $admin->getName(),
+            'email' => $admin->getEmail()
+        ];
     }
 }
