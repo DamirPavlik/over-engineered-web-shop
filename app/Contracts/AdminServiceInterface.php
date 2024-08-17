@@ -13,4 +13,6 @@ interface AdminServiceInterface
     public function create(RegisterUserData $data);
 
     public function findByEmail(string $email): Admin | null;
+
+    public function getAll(): array;
 }
