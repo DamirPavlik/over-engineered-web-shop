@@ -12,7 +12,7 @@ class CategoryValidator implements ValidatorInterface
     {
         $validator = new Validator($data);
 
-        $validator->rule('required', ['title']);
+        $validator->rule('required', ['name']);
 
         if (!$validator->validate()) {
             throw new ValidationException("Skill issues adding a category: " . $validator->errors());
