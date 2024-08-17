@@ -6,19 +6,37 @@
 
     <form action="/admin-dashboard/categories" method="POST">
         <div>
-            <label for="title">Category</label>
-            <input type="text" id="title" name="title">
+            <label for="name">Category</label>
+            <input type="text" id="name" name="name">
         </div>
         <button type="submit">Submit</button>
     </form>
 
     <h2>All Categories</h2>
-    <table class="all-categories">
+    <table class="all-categories admin-table">
         <tr>
             <th>Id</th>
             <th>Name</th>
             <th>Actions</th>
         </tr>
     </table>
+
+    <div id="edit-popup" class="edit-popup">
+        <div class="popup-content">
+            <span id="closePopupBtn" class="close">&times;</span>
+            <h3>Edit Product</h3>
+
+            <form method="POST">
+
+                <div>
+                    <label for="name">Name</label>
+                    <input type="text" name="name" id="name">
+                </div>
+
+                <button type="submit">Submit</button>
+            </form>
+
+        </div>
+    </div>
 </main>
 {% endblock %}
