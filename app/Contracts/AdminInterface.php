@@ -2,6 +2,7 @@
 
 namespace App\Contracts;
 
+use App\Entity\Admin;
 use App\Enum\LoginAttemptStatus;
 
 interface AdminInterface
@@ -10,4 +11,5 @@ interface AdminInterface
 
     public function logout(): void;
 
+    public function getAdmin(Admin $admin);
 }
