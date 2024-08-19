@@ -1,0 +1,31 @@
+{% extends 'dashboard/orders/layout.twig' %}
+
+{% block content %}
+    <main id="products-wrapper">
+        <h1>Add Products</h1>
+
+        <form action="/admin-dashboard/products" method="POST">
+            <div>
+                <label for="title">Product Title</label>
+                <input type="text" id="title" name="title">
+            </div>
+            <div>
+                <label for="description">Description</label>
+                <input type="text" id="description" name="description">
+            </div>
+            <div>
+                <label for="price">Price</label>
+                <input type="number" id="price" name="price">
+            </div>
+            <div>
+                <label for="stock-quantity">Stock Quantity</label>
+                <input type="number" id="stock-quantity" name="stockQuantity">
+            </div>
+
+            <select name="category" id="category">
+            </select>
+            <button type="submit">Submit</button>
+        </form>
+
+    </main>
+{% endblock %}
