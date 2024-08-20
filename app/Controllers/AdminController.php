@@ -6,11 +6,14 @@ use App\Contracts\AdminInterface;
 use App\Contracts\AdminServiceInterface;
 use App\Contracts\EntityManagerServiceInterface;
 use App\Contracts\ValidatorFactoryInterface;
+use App\DataObjects\AdminData;
+use App\DataObjects\UserData;
 use App\Entity\Admin;
 use App\Enum\LoginAttemptStatus;
 use App\Exception\ValidationException;
 use App\ResponseFormatter;
 use App\Services\EntityManagerService;
+use App\Validators\EditUserValidator;
 use App\Validators\LoginValidator;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -75,5 +78,15 @@ class AdminController
     {
         $data = $this->admin->getAdmin($admin);
         return $this->responseFormatter->asJson($response, $data);
+    }
+
+    public function update(Response $response, Request $request, Admin $admin): Response
+    {
+        $data = $this->validatorFactory->make(EditUserValidator::class)->validate($request->getParsedBody());
+        $this->entityManagerService->sync($this->adminService->update(
+            $admin,
+            new AdminData($data['name'], $data['email'])
+        ));
+        return $response->withHeader("Location", "/admin-dashboard/users")->withStatus(302);
     }
 }
