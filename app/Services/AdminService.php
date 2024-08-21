@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Contracts\AdminServiceInterface;
 use App\Contracts\EntityManagerServiceInterface;
+use App\DataObjects\AdminData;
 use App\DataObjects\RegisterUserData;
 use App\Entity\Admin;
 use Doctrine\ORM\EntityManager;
@@ -52,5 +53,12 @@ class AdminService implements AdminServiceInterface
         } catch (\Exception $e) {
             return ["error" => $e->getMessage()];
         }
+    }
+
+    public function update(Admin $admin, AdminData $adminData): Admin
+    {
+        $admin->setName($adminData->name);
+        $admin->setEmail($adminData->email);
+        return $admin;
     }
 }
