@@ -32,7 +32,7 @@
     </form>
 
     <h2>All Users</h2>
-    <table class="all-users">
+    <table class="all-users admin-table">
         <tr>
             <th>Id</th>
             <th>Name</th>
@@ -45,7 +45,7 @@
 
 
     <h2>All Admins</h2>
-    <table class="all-admins">
+    <table class="all-admins admin-table">
         <tr>
             <th>Id</th>
             <th>Name</th>
@@ -55,6 +55,28 @@
             <th>Actions</th>
         </tr>
     </table>
+
+    <div id="edit-popup" class="edit-popup">
+        <div class="popup-content">
+            <span id="closePopupBtn" class="close">&times;</span>
+            <h3>Edit Product</h3>
+
+            <form method="POST">
+
+                <div>
+                    <label for="name">Name</label>
+                    <input type="text" name="name" id="name">
+                </div>
+                <div>
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email">
+                </div>
+                <button type="submit">Submit</button>
+            </form>
+
+        </div>
+    </div>
+
 
 </main>
 {% endblock %}
