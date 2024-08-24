@@ -7,6 +7,7 @@ use App\Contracts\AdminServiceInterface;
 use App\Contracts\EntityManagerServiceInterface;
 use App\Contracts\SessionInterface;
 use App\Contracts\ValidatorFactoryInterface;
+use App\Csrf;
 use App\DataObjects\SessionConfig;
 use App\Enum\AppEnvironment;
 use App\Enum\SameSite;
@@ -22,6 +23,7 @@ use Doctrine\ORM\ORMSetup;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Slim\App;
+use Slim\Csrf\Guard;
 use Slim\Factory\AppFactory;
 use Slim\Views\Twig;
 use Symfony\Bridge\Twig\Extension\AssetExtension;
@@ -88,7 +90,9 @@ return [
         new EntrypointLookup(BUILD_PATH . '/entrypoints.json'),
         $container->get('webpack_encore.packages')
     ),
-
+    'csrf'                                  => fn(ResponseFactoryInterface $responseFactory, Csrf $csrf) => new Guard(
+        $responseFactory, failureHandler: $csrf->failureHandler(), persistentTokenMode: true
+    ),
     ResponseFactoryInterface::class => fn(App $app) => $app->getResponseFactory(),
     AdminServiceInterface::class => fn(ContainerInterface $container) => $container->get(
         AdminService::class
