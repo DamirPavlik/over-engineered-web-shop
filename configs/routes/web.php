@@ -21,6 +21,8 @@ return function (App $app) {
             $adminProtected->post('/logout', [AdminController::class, 'logout']);
             $adminProtected->get('/admin/load', [AdminController::class, 'load']);
             $adminProtected->delete('/admin/{admin}', [AdminController::class, 'delete']);
+            $adminProtected->get('/admin/{admin}', [AdminController::class, 'getAdmin']);
+            $adminProtected->post('/admin/update/{admin}', [AdminController::class, 'update']);
 
             $adminProtected->group('/products', function(RouteCollectorProxy $products) {
                 $products->get('', [ProductController::class, 'index']);
@@ -35,6 +37,7 @@ return function (App $app) {
                 $categories->post('', [CategoryController::class, 'addCategory']);
                 $categories->get('/load', [CategoryController::class, 'load']);
                 $categories->delete('/{category}', [CategoryController::class, 'delete']);
+                $categories->post('/update/{category}', [CategoryController::class, 'update']);
             });
 
             $adminProtected->group('/users', function(RouteCollectorProxy $users) {
@@ -42,6 +45,8 @@ return function (App $app) {
                 $users->post('', [UserController::class, 'addUser']);
                 $users->get('/load', [UserController::class, 'load']);
                 $users->delete('/{user}', [UserController::class, 'delete']);
+                $users->get('/{user}', [UserController::class, 'getUser']);
+                $users->post('/update/{user}', [UserController::class, 'update']);
             });
 
         })->add(AdminMiddleware::class);
