@@ -22,12 +22,12 @@ use Slim\Views\Twig;
 class AdminController
 {
     public function __construct(
-        private readonly Twig $twig,
-        private readonly ValidatorFactoryInterface $validatorFactory,
-        private readonly AdminInterface $admin,
-        private readonly AdminServiceInterface $adminService,
-        private readonly ResponseFormatter $responseFormatter,
-        private readonly EntityManagerServiceInterface $entityManagerService
+        private Twig                          $twig,
+        private ValidatorFactoryInterface     $validatorFactory,
+        private AdminInterface                $admin,
+        private AdminServiceInterface         $adminService,
+        private ResponseFormatter             $responseFormatter,
+        private EntityManagerServiceInterface $entityManagerService
     ) {
     }
 
