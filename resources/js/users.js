@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 .then(user => {
                     popupForm.querySelector('input[name="name"]').value = user.name;
                     popupForm.querySelector('input[name="email"]').value = user.email;
-                    popupForm.querySelector('input[name="type"]').value = 'user'; // Add hidden input for type
+                    // popupForm.querySelector('input[name="type"]').value = 'user'; // Add hidden input for type
                     popupForm.action = `/admin-dashboard/users/update/${userId}`;
                     popup.style.display = 'flex';
                 })
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 .then(admin => {
                     popupForm.querySelector('input[name="name"]').value = admin.name;
                     popupForm.querySelector('input[name="email"]').value = admin.email;
-                    popupForm.querySelector('input[name="type"]').value = 'admin'; // Add hidden input for type
+                    // popupForm.querySelector('input[name="type"]').value = 'admin'; // Add hidden input for type
                     popupForm.action = `/admin-dashboard/admin/update/${adminId}`;
                     popup.style.display = 'flex';
                 })
