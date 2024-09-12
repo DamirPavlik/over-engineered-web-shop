@@ -1,17 +1,20 @@
-{#{% extends 'layout.twig' %}#}
+{% extends 'dashboard/login_layout.twig' %}
 
 {% block content %}
     <main>
         <h1 class="form-title">Admin Dashboard</h1>
-        <form action="/admin-dashboard/login/submit" method="POST">
+        <form action="/admin-dashboard/login" method="POST">
+            {{ csrf.fields | raw }}
             <div>
                 <label for="email">Email</label>
-                <input type="email" name="email" id="email">
+                <input type="email" name="email" id="email" value="{{ old.email }}">
+                {{ errors.email | first }}
             </div>
 
             <div>
                 <label for="password">Password</label>
                 <input type="password" name="password" id="password">
+                {{ errors.password | first }}
             </div>
             <button type="submit">Login</button>
         </form>
