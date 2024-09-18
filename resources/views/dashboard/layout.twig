@@ -2,16 +2,19 @@
 <html lang="en" class="h-full bg-gray-100">
 <head>
     <meta charset="UTF-8">
+    <meta id="csrfName" name="{{ csrf.keys.name }}" content="{{ csrf.name }}">
+    <meta id="csrfValue" name="{{ csrf.keys.value }}" content="{{ csrf.value }}">
     <title>{% block title %}Admin Dashboard{% endblock %}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
+        {{ encore_entry_link_tags('admin') }}
     {% endblock %}
 
     {% block javascripts %}
-        {{ encore_entry_script_tags('app') }}
+        {{ encore_entry_script_tags('admin') }}
     {% endblock %}
 </head>
 <body>
@@ -24,46 +27,37 @@
                 </a>
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                     <li class="nav-item">
-                        <a href="/" class="nav-link align-middle px-0">
+                        <a href="/" class="nav-link align-middle px-0 admin-links">
                             <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Homepage</span>
                         </a>
                     </li>
                     <li>
-                        <a href="/admin-dashboard/products"  class="nav-link px-0 align-middle">
+                        <a href="/admin-dashboard/products"  class="nav-link px-0 align-middle admin-links">
                             <i class="fs-4 bi-basket"></i> <span class="ms-1 d-none d-sm-inline">Products</span>
                         </a>
                     </li>
                     <li>
-                        <a href="/admin-dashboard/users" class="nav-link px-0 align-middle">
+                        <a href="/admin-dashboard/users" class="nav-link px-0 align-middle admin-links">
                             <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">Users</span>
                         </a>
                     </li>
-{#                    <li>#}
-{#                        <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">#}
-{#                            <i class="fs-4 bi-bootstrap"></i> <span class="ms-1 d-none d-sm-inline">Bootstrap</span></a>#}
-{#                        <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">#}
-{#                            <li class="w-100">#}
-{#                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span> 1</a>#}
-{#                            </li>#}
-{#                            <li>#}
-{#                                <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Item</span> 2</a>#}
-{#                            </li>#}
-{#                        </ul>#}
-{#                    </li>#}
+                    <li>
+                        <a href="/admin-dashboard/categories" class="nav-link px-0 align-middle admin-links">
+                            <i class="bi bi-tags"></i> <span class="ms-1 d-none d-sm-inline">Categories</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/admin-dashboard/orders" class="nav-link px-0 align-middle admin-links">
+                            <i class="bi bi-truck"></i> <span class="ms-1 d-none d-sm-inline">Orders</span>
+                        </a>
+                    </li>
                 </ul>
                 <hr>
-                <div class="dropdown pb-4">
-                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://github.com/mdo.png" alt="hugenerd" width="30" height="30" class="rounded-circle">
-                        <span class="d-none d-sm-inline mx-1 c-blue">{{ admin.username }} test</span>
+                <div class="nav nav-pills pb-4">
+                    <a href="#" class="logout-button nav-link px-0 align-middle">
+                        <i class="bi bi-box-arrow-left"></i>
+                        <span class="d-none d-sm-inline mx-1 c-blue">Logout</span>
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                        <li><a class="dropdown-item" href="#">New project...</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#">Sign out</a></li>
-                    </ul>
                 </div>
             </div>
         </div>
